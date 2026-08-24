@@ -25,12 +25,23 @@ class TruthOrDareGame:
         raise NotImplementedError("Implement load_prompts()")
 
     def choose_player(self) -> str:
-        """TODO: Return a random player from self.players."""
-        raise NotImplementedError("Implement choose_player()")
+        """Return a random player from self.players."""
+        if not self.players:
+            raise ValueError("No players available to choose from.")
+        return random.choice(self.players)
 
     def choose_prompt(self, challenge_type: str) -> str:
-        """TODO: Return a random truth/dare prompt based on challenge_type."""
-        raise NotImplementedError("Implement choose_prompt()")
+        """Return a random truth or dare prompt based on challenge_type."""
+        challenge_type = challenge_type.strip().lower()
+        if challenge_type == "truth":
+            prompts = self.truth_prompts
+        elif challenge_type == "dare":
+            prompts = self.dare_prompts
+        else:
+            raise ValueError("challenge_type must be 'truth' or 'dare'")
+        if not prompts:
+            raise ValueError(f"No {challenge_type} prompts available.")
+        return random.choice(prompts)
 
     def play_round(self) -> None:
         """TODO: Run one round of Truth or Dare."""
